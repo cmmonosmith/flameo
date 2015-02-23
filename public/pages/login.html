@@ -1,0 +1,21 @@
+﻿<div class="jumbotron text-center line-height-override">
+    <h1 class="text-center">LOGIN</h1>
+    <div class="text-center">unsophisticated and insecure, just like me</div>
+
+    <br />
+    <br />
+    <span id="error" class="error">you need to login to access this feature</span>
+    <br />
+    <br />
+    <form name="loginForm" ng-controller="loginController" ng-submit="login()">
+        <div class="form-group text-center">
+            <label>username</label>
+            <input type="text" class="form-control not-ridiculous not-block" name="username" ng-model="formData.username">
+        </div>
+        <div class="form-group text-center">
+            <label>password</label>
+            <input type="password" class="form-control not-ridiculous not-block" name="password" ng-model="formData.password">
+        </div>
+        <input type="submit" class="btn btn-warning btn-lg" value="GO GO GO">
+    </form>
+</div>

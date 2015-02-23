@@ -1,0 +1,62 @@
+Christopher M. Monosmith
+
+Residence
+2287 Stonehedge Dr Apt C
+East Lansing, MI 48823
+cell – (810) 210-0645
+cmmonosmith@gmail.com
+
+SUMMARY
+
+Seeking a fun and challenging career in software programming or game programming.
+Portfolio: http://www.monosmith.com/portfolio.php
+
+EDUCATION
+
+Bachelor of Computer Science - May 2009
+Michigan State University, East Lansing, MI
+GPA: 3.4065
+•	Emphasis on game programming
+•	Cognate (minor) – Japanese Language
+
+TECHNICAL
+
+Languages Used: Java (currently most proficient), PL/SQL, C, C++, C#, VB, HTML, PHP
+Environments: Windows (most proficient), Linux/Unix, some Mac
+Development Environments: IntelliJ, Oracle SQL Developer, Visual Studio
+Miscellaneous: Weblogic, Struts, Kodo, .NET, SVN, XNA, OpenGL, Actuate, Pentaho
+
+EXPERIENCE
+
+Software Engineer - Vertafore
+August 2009 - Present
+East Lansing, MI
+•	maintain and enhance Sircon for States and G2 web applications to meet customer needs
+	o	primarily Java-based, deployed on WebLogic 10.3.x
+•	triage critical issues for applications to improve stability and customer satisfaction
+•	follow Java OO standards and industry/internal best practices, utilize standard libraries
+•	optimize Java and Oracle database performance for new and existing features
+	o	reduced load time of a complex page by over 90%, minimizing timeout issues
+•	design and build efficient reports and queries
+•	build and enhance internal tools to improve efficiency across departments
+•	create and improve documentation for development and cross-product integration
+•	work on a small Scrum/agile team in addition to working with remote teams abroad
+
+Internship - General Dynamics Land Systems
+May – August in 2006, 2007, 2008
+Sterling Heights, MI
+•	performed requirements engineering, decomposition, and documentation
+•	demonstrated Stryker Embedded Training capabilities to government and Marine Corps
+•	reviewed, tested and documented potential software problem in current design
+•	assisted in subsystem simulation software design, development, and documentation
+
+Independent Study at MSU - CMEIAS
+Fall 2006 – Spring 2007
+Center for Microbial Ecology Image Analysis System
+East Lansing, MI
+•	incorporated functionality from two old command line tools into a new GUI application
+•	enhanced performance and compatibility with other CMEIAS software
+
+OTHER ACTIVITIES
+	
+University activities: MSU Kendo Club (officer, 2006-2009), Spartasoft

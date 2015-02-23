@@ -1,0 +1,8 @@
+node_modules/
+obj/
+Scripts/_references.js
+monosmith.com.njsproj
+monosmith.com.sln
+monosmith.com.v12.suo
+public/img/Thumbs.db
+OpenShift ssh.lnk

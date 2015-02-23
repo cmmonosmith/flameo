@@ -1,0 +1,33 @@
+.appendage {
+    color: red;
+}
+
+.img-divider {
+    padding-top: 32px;
+}
+
+.line-height-override {
+    line-height: 1.0;
+}
+
+.burndown {
+    width: 100%;
+    height: 600px;
+    font-size: 11px;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: forestgreen;
+}
+
+.not-ridiculous {
+    width: 256px;
+}
+
+.not-block {
+    display: inline;
+}

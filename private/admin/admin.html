@@ -1,0 +1,91 @@
+﻿<div class="jumbotron text-center line-height-override">
+    <h1 class="text-center">ADMIN</h1>
+    <div class="text-center">a page for cool people only</div>
+    <br />
+    <br />
+    <span id="error" class="error"></span>
+    <span id="success" class="success"></span>
+    <br />
+    <br />
+
+    <a href="javascript:void(0)" id="assignButton" class="assignButton" onclick="assignButtons()">assign buttons</a>
+    <br />
+    <br />
+
+    <form id="userForm">
+        <div ng-repeat="user in users">
+            <div class="inputs">
+                <label>Username</label><input type="text" class="usernameInput" name="username" ng-model="user.username">
+                <label>Password</label><input type="text" class="passwordInput" name="password" ng-model="user.password">
+                <a href="javascript:void(0)" class="saveButton" data-action="save">save</a>
+                <a href="javascript:void(0)" class="addButton" data-action="add">add</a>
+                <a href="javascript:void(0)" class="deleteButton" data-action="delete">delete</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    var handler = function (e) {
+        var jqEl = jQuery(e.currentTarget);
+        var inputGroup = jQuery(jqEl).parent();
+        switch (jqEl.attr("data-action")) {
+            case "save":
+                var username = inputGroup.find("[name^='username']").val();
+                var password = inputGroup.find("[name^='password']").val();
+                var errors = [];
+                if (username == '') {
+                    errors.push('username cannot be blank');
+                }
+                if (password == '') {
+                    errors.push('password cannot be blank');
+                }
+                if (errors.length > 0) {
+                    error(errors);
+                } else {
+                    $.post("/api/user", { username: username, password: password })
+                        .done(function (data) {
+                            success('Congratulations you did it.');
+                        })
+                        .fail(function () {
+                            error(['Something went super wrong. Try again...?']);
+                        });
+                }
+                break;
+            case "add":
+                var clone = jQuery(inputGroup).clone();
+                jQuery(clone).find("input").val("");
+                jQuery(clone).find("a").on("click", handler)
+                jQuery(inputGroup).after(clone);
+                break;
+            case "delete":
+                //need to actually delete the user
+                //jQuery(inputGroup).remove();
+                error(["delete is not currently enabled..."]);
+                break;
+        }
+        return false;
+    };
+
+    function error(strs) {
+        jQuery('#success').html('');
+        var i;
+        var html = '<ul>';
+        for (i = 0; i < strs.length; i++) {
+            html += '<li>' + strs[i] + '</li>';
+        }
+        html += '</ul>';
+        jQuery('#error').html(html);
+    }
+
+    function success(str) {
+        jQuery('#error').html('');
+        jQuery('#success').html(str);
+    }
+
+    function assignButtons() {
+        jQuery('#assignButton').hide();
+        var userForm = jQuery('#userForm');
+        jQuery(userForm).find("a").on("click", handler);
+    };
+</script>

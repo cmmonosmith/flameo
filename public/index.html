@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- define angular app -->
+<html ng-app="monosmithApp">
+	<head>
+		<!-- SCROLLS -->
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="bootstrap/fonts/font-awesome.css" />
+        <link rel="stylesheet" href="css/jquery-ui-1.10.4.min.css" />
+        <link rel="stylesheet" href="css/general.css" />
+	
+		<!-- SPELLS -->
+        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.10.4.min.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"></script>
+        <script type="text/javascript" src="js/angular-route.js"></script>
+        <script type="text/javascript" src="js/moment.min.js"></script>
+        <script type="text/javascript" src="js/highcharts-4.0.1/js/highcharts.js"></script>
+        <script type="text/javascript" src="js/highcharts-4.0.1/js/modules/exporting.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+
+        <title>dev.monosmith.com</title>
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+	</head>
+	<body ng-controller="mainController">
+		<!-- HEADER AND NAVBAR -->
+		<header>
+            <!--<br />-->
+            <nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">it's freakin dev.monosmith.com</a>
+				</div>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><span class="glyphicon glyphicon-home"></span> index</a></li>
+                    <li><a href="#flameo"><span class="glyphicon glyphicon-fire"></span> flameo</a></li>
+                    <li><a href="#dreams"><span class="glyphicon glyphicon-cloud"></span> dreams <span class="appendage">(coming soon!)</span></a></li>
+					<li><a href="#portfolio"><span class="glyphicon glyphicon-folder-open"></span> portfolio</a></li>
+					<li><a href="#resume"><span class="glyphicon glyphicon-book"></span> resume</a></li>
+                    <li><a href="#about"><span class="glyphicon glyphicon-info-sign"></span> about_me</a></li>
+				</ul>
+			</div>
+			</nav>
+		</header>
+
+		<!-- MAIN CONTENT AND INJECTED VIEWS -->
+		<div id="main">
+
+			<!-- angular templating -->
+			<!-- this is where content will be injected -->
+			<div ng-view></div>
+
+		</div>
+
+		<!-- FOOTER -->
+		<footer class="text-center">
+			a work in progress by Chris Monosmith [<a href="#admin">admin</a>][<a href="#logout">logout</a>]
+		</footer>
+
+	</body>
+</html>

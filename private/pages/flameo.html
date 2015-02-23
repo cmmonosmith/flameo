@@ -1,0 +1,218 @@
+﻿<div class="jumbotron text-center line-height-override">
+    <h1 class="text-center">FLAMEO, HOTMAN!</h1>
+    <div class="text-center">an entirely unsuitable burndown chart</div>
+    <br />
+    <br />
+    <span id="error" class="error"></span>
+    <span id="success" class="success"></span>
+    <br />
+    <br />
+
+    <div id="hiddenInitialChartValues" style="display:none">
+        <!-- the actual values are not accessible to my javascript at page load -_- -->
+        <span id="hiddenTitle">{{ title }}</span>
+        <span id="hiddenDates">{{ dates }}</span>
+        <span id="hiddenTotals">{{ totals }}</span>
+        <span id="hiddenActuals">{{ actuals }}</span>
+    </div>
+
+    <form id="chartForm">
+        <label>Title:</label><input id="title" type="text" name="title">
+        <br />
+        <div class="inputs">
+            <label>Date</label><input type="text" class="dateInput" name="date">
+            <label>Total</label><input type="text" class="totalInput" name="total">
+            <label>Remaining</label><input type="text" class="actualInput" name="actual">
+            <a href="javascript:void(0)" class="addButton" data-action="add">add</a>
+            <a href="javascript:void(0)" class="deleteButton" data-action="delete">delete</a>
+        </div>
+        <br />
+        <br />
+        <input id="buildButton" type="button" class="btn btn-warning btn-lg" value="Regraph" onclick="callBuildChart();">
+        <input id="saveButton" type="button" class="btn btn-warning btn-lg" value="Save Chart" onclick="saveChart();">
+        <input id="reloadButton" type="button" class="btn btn-warning btn-lg" value="Load Saved Values" onclick="reloadChart();">
+    </form>
+
+    <br />
+    <br />
+    <div id="chart" class="burndown"></div>
+</div>
+
+<script>
+    var handler = function(e) {
+        var jqEl = jQuery(e.currentTarget);
+        var inputGroup = jQuery(jqEl).parent();
+        switch (jqEl.attr("data-action")) {
+            case "add":
+                var clone = jQuery(inputGroup).clone();
+                jQuery(clone).find("input").val("");
+                jQuery(clone).find("a").on("click", handler)
+                jQuery(inputGroup).after(clone);
+                jQuery(clone).find('.dateInput').removeClass('hasDatepicker');
+                jQuery(clone).find('.dateInput').removeAttr('id');
+                jQuery(clone).find('.dateInput').datepicker();
+                break;
+            case "delete":
+                if (jQuery('.dateInput').length == 1) {
+                    error(["don't delete the last one"]);
+                } else {
+                    jQuery(inputGroup).remove();
+                }
+                break;
+        }
+        return false;
+    }
+
+    function isInt(value) {
+        return !isNaN(value) && parseInt(Number(value)) == value;
+    }
+    
+    function validateInputs(dates, totals, actuals) {
+        var errors = [];
+        var i;
+        var datePresent = true;
+        var totalPresent = true;
+        var actualPresent = true;
+        for (i = 0; i < dates.length; i++) {
+            if (!moment(dates[i], "MM/DD/YYYY").isValid()) {
+                errors.push('Date ' + (i + 1) + ' not valid');
+            }
+            if (isNaN(totals[i]) && totalPresent) {
+                totalPresent = false;
+            } else if (!isNaN(totals[i])) {
+                if (!isInt(totals[i])) {
+                    errors.push('Total must be an integer');
+                }
+                if (!totalPresent) {
+                    errors.push("Don't skip days with the totals");
+                    totalPresent = true;
+                }
+            }
+            if (isNaN(actuals[i]) && actualPresent) {
+                actualPresent = false;
+            } else if (!isNaN(actuals[i])) {
+                if (!isInt(actuals[i])) {
+                    errors.push('Remaining must be an integer');
+                }
+                if (!actualPresent) {
+                    errors.push("Don't skip days with the remaining values");
+                    actualPresent = true;
+                }
+            }
+            if ((totals[i] === '' && actuals[i] !== '') || (totals[i] !== '' && actuals[i] === '')) {
+                errors.push('If total is present, remaining must be present, and vice versa')
+            }
+            // highlight fields
+        }
+        if (errors.length > 0) {
+            error(errors);
+        }
+        return errors.length;
+    }
+
+    function callBuildChart() {
+        var title = $('#title').val();
+        var dates = $("[name^='date']").map(function () { return $(this).val(); }).get();
+        var totals = $("[name^='total']").map(function(){return parseInt($(this).val());}).get();
+        var actuals = $("[name^='actual']").map(function(){return parseInt($(this).val());}).get();
+        var errors = validateInputs(dates, totals, actuals);
+        if (errors > 0) {
+            return;
+        }
+        buildChart(title, dates, totals, actuals);
+    }
+
+    function saveChart() {
+        jQuery('#saveButton').attr("disabled", "disabled");
+        var dates = jQuery(chartForm).find("input.dateInput").map(function () {
+            return $(this).val();
+        }).get().join('^');
+        var totals = jQuery(chartForm).find("input.totalInput").map(function () {
+            return $(this).val();
+        }).get().join('^');
+        var actuals = jQuery(chartForm).find("input.actualInput").map(function () {
+            return $(this).val();
+        }).get().join('^');
+        var title = $('#title').val();
+        $.post("/api/chart", { dates: dates, totals: totals, actuals: actuals, title: title })
+            .done(function (data) {
+                success('Congratulations you did it.');
+                jQuery('#hiddenTitle').html(title);
+                jQuery('#hiddenDates').html(dates);
+                jQuery('#hiddenTotals').html(totals);
+                jQuery('#hiddenActuals').html(actuals);
+            })
+            .fail(function () {
+                error(['Something went super wrong. Try again...?']);
+            })
+            .always(function () {
+                jQuery('#saveButton').removeAttr("disabled");
+            });
+        return false;
+    }
+
+    function reloadChart() {
+        var divs = jQuery('.inputs');
+        var i;
+        for (i = divs.length - 1; i > 0; i--) {
+            jQuery(divs[i]).remove();
+        }
+        var title = jQuery('#hiddenTitle').html();
+        var dates = jQuery('#hiddenDates').html().split('^');
+        var totals = jQuery('#hiddenTotals').html().split('^');
+        var actuals = jQuery('#hiddenActuals').html().split('^');
+        $('#title').val(title);
+        var orig = jQuery('.inputs')[0];
+        jQuery(orig).find('.dateInput').val(dates[0]);
+        jQuery(orig).find('.totalInput').val(totals[0]);
+        jQuery(orig).find('.actualInput').val(actuals[0]);
+        var clone;
+        var prev = orig;
+        var num;
+        for (i = 1; i < dates.length; i++) {
+            clone = jQuery(prev).clone();
+            jQuery(clone).find('.dateInput').val(dates[i]);
+            num = parseInt(totals[i]);
+            if (isNaN(num)) {
+                num = '';
+            }
+            jQuery(clone).find('.totalInput').val(num);
+            num = parseInt(actuals[i])
+            if (isNaN(num)) {
+                num = '';
+            }
+            jQuery(clone).find('.actualInput').val(num);
+            jQuery(clone).find("a").on("click", handler)
+            jQuery(prev).after(clone);
+            jQuery(clone).find('.dateInput').removeClass('hasDatepicker');
+            jQuery(clone).find('.dateInput').removeAttr('id');
+            jQuery(clone).find('.dateInput').datepicker();
+            prev = clone;
+        }
+    }
+
+    function error(strs) {
+        jQuery('#success').html('');
+        var i;
+        var html = '<ul>';
+        for (i = 0; i < strs.length; i++)
+        {
+            html += '<li>' + strs[i] + '</li>';
+        }
+        html += '</ul>';
+        jQuery('#error').html(html);
+    }
+
+    function success(str) {
+        jQuery('#error').html('');
+        jQuery('#success').html(str);
+    }
+
+    jQuery(function () {
+        var chartForm = jQuery('#chartForm');
+        jQuery(chartForm).find("a").on("click", handler);
+        jQuery('[name^="date"]').datepicker();
+    });
+</script>
+
+<script type="text/javascript" src="../js/makeChart.js"></script>
