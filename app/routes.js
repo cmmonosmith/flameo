@@ -1,5 +1,3 @@
-var Blog = require('./models/blog');
-var Project = require('./models/project');
 var Chart = require('./models/chart');
 var User = require('./models/user');
 var mongoose = require('mongoose');
