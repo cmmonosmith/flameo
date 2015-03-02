@@ -6,26 +6,6 @@ var mongoose = require('mongoose');
 
 module.exports = function(app) {
 
-	app.get('/api/blogs', function(req, res) {
-		Blog.find({}).sort('-timestamp').limit(10).exec(function(err, blogs) {
-			if (err) {
-                console.log(err);
-				res.send(err);
-            }
-			res.json(blogs); 
-		});
-	});
-
-	app.get('/api/projects', function(req, res) {
-		Project.find({}).sort('-timestamp').exec(function(err, projects) {
-			if (err) {
-                console.log(err);
-				res.send(err);
-            }
-			res.json(projects); 
-		});
-	});
-
 	app.get('/api/chart', isAuthenticated, function(req, res) {
 		Chart.find({'user': req.session.username}).sort('-timestamp').limit(1).exec(function(err, chart) {
 			if (err) {

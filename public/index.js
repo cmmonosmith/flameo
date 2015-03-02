@@ -18,30 +18,6 @@ monosmithApp.config(function($routeProvider) {
 			controller  : 'flameoController'
 		})
 
-		// route for the dreams page
-		.when('/dreams', {
-			templateUrl : 'pages/dreams.html',
-			controller  : 'dreamsController'
-		})
-
-		// route for the portfolio page
-		.when('/portfolio', {
-			templateUrl : 'pages/portfolio.html',
-			controller  : 'portfolioController'
-		})
-
-		// route for the resume page
-		.when('/resume', {
-			templateUrl : 'pages/resume.html',
-			controller  : 'resumeController'
-		})
-
-		// route for the about page
-		.when('/about', {
-			templateUrl : 'pages/about.html',
-			controller  : 'aboutController'
-		})
-
 		// route for the login page
 		.when('/admin', {
 			templateUrl : '/private/admin/admin.html',
@@ -80,16 +56,6 @@ monosmithApp.controller('loginController', ['$scope', '$http', '$route', 'loginF
 
 // create the controller and inject Angular's $scope
 monosmithApp.controller('mainController', function($scope, $http) {
-    $http.get('/api/blogs')
-		.success(function(data) {
-            angular.forEach(data, function(value,index) {
-                value.timestamp = moment(value.timestamp).format('dddd MMMM DD, YYYY [at] h:mm a');
-            });
-			$scope.blogs = data;
-		})
-		.error(function(data) {
-			// ?
-		});
 });
 
 monosmithApp.controller('flameoController', function($scope, $http) {
@@ -124,41 +90,6 @@ monosmithApp.controller('adminController', function($scope, $http) {
 
 monosmithApp.controller('logoutController', function($scope, $http) {
     $http.post('/logout');
-    $http.get('/api/blogs')
-		.success(function(data) {
-            angular.forEach(data, function(value,index) {
-                value.timestamp = moment(value.timestamp).format('dddd MMMM DD, YYYY [at] h:mm a');
-            });
-			$scope.blogs = data;
-		})
-		.error(function(data) {
-			// ?
-		});
-});
-
-monosmithApp.controller('dreamsController', function($scope, $http) {
-	$scope.message = 'gonna create a page to peruse dreams i\'ve had. need to transcribe a lot of them and get them in the database...';
-});
-
-monosmithApp.controller('portfolioController', function($scope, $http) {
-	$http.get('/api/projects')
-		.success(function(data) {
-			angular.forEach(data, function(value,index) {
-                value.timestamp = moment(value.timestamp).format('dddd MMMM DD, YYYY [at] h:mm a');
-            });
-			$scope.projects = data;
-		})
-		.error(function(data) {
-			// ?
-		});
-});
-
-monosmithApp.controller('resumeController', function($scope) {
-	// nothing needed here
-});
-
-monosmithApp.controller('aboutController', function($scope) {
-	// nothing needed here
 });
 
 // antipattern here, basically disable cache to accomplish dynamic route for login/flameo

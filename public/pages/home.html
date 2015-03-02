@@ -1,21 +1,18 @@
 <div class="jumbotron text-center line-height-override">
     <h1 class="text-center">INDEX</h1>
     <div class="text-center">a website devoted to the truth</div>
-    <!-- loop over the posts in $scope.blogs -->
-    <div ng-repeat="blog in blogs">
+    <div>
         <p class="text-center img-divider">
             <img src="img/divider.png" alt="--------" title="Ethanol" />
         </p>
         <h2 class="text-center">
-            {{ blog.title }}
+            Apps
         </h2>
         <div class="text-left">
-            <div ng-repeat="body in blog.body">
-                <p>{{ body }}</p>
+            <div>
+                <p>Click on Flameo to use Flameo.</p>
+                <p>There aren't any other apps at the moment...</p>
             </div>
-        </div>
-        <div class="text-left">
-            posted on {{ blog.timestamp }}
         </div>
     </div>
 </div>
