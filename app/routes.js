@@ -1,4 +1,4 @@
-var Chart = require('./models/chart');
+var Chart = require('./models/charty');
 var User = require('./models/user');
 var mongoose = require('mongoose');
 

@@ -1,12 +1,12 @@
 // modules
 
-//var express  = require('express');
+var express  = require('express');
 var app      = express();
-//var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var ip       = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 var port     = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var secret   = process.env.SESSION_SECRET || 'youmustbesomekindofwizard';
-//var database = require('./config/database');
+var database = require('./config/database');
 
 //configuration
 
@@ -14,7 +14,7 @@ mongoose.connect(database.url);
 
 app.configure(function() {
 	app.use(express.cookieParser());
-    app.use(express.session({ secret: 'youmustbesomekindofwizard' }));    // session secret
+    app.use(express.session({ secret: secret }));    // session secret
     app.use(express.static(__dirname + '/public'));  // set the static files location. /public/img will be /img for users
 	app.use(express.logger('dev'));                  // log every request to the console
 	app.use(express.bodyParser());                   // have the ability to pull information from html in POST
