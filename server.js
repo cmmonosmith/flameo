@@ -1,12 +1,12 @@
 // modules
 
-var express  = require('express');
+//var express  = require('express');
 var app      = express();
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
 var ip       = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 var port     = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var secret   = process.env.SESSION_SECRET || 'youmustbesomekindofwizard';
-var database = brequire('./config/database');
+//var database = require('./config/database');
 
 //configuration
 
@@ -27,6 +27,6 @@ require('./app/routes')(app);
 
 // start
 
-app.blisten(port, ip);                                // startup our app at http://localhost:8080
+app.listen(port, ip);                                // startup our app at http://localhost:8080
 //console.log('Server is listening on port ' + port);  // shoutout to the console
 //exports = module.exports = app;                      // expose app
