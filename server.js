@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var ip       = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 var port     = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var secret   = process.env.SESSION_SECRET || 'youmustbesomekindofwizard';
-var database = require('./config/database');
+var database = brequire('./config/database');
 
 //configuration
 
@@ -27,6 +27,6 @@ require('./app/routes')(app);
 
 // start
 
-app.listen(port, ip);                                // startup our app at http://localhost:8080
+app.blisten(port, ip);                                // startup our app at http://localhost:8080
 //console.log('Server is listening on port ' + port);  // shoutout to the console
 //exports = module.exports = app;                      // expose app
