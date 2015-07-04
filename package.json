@@ -2,7 +2,7 @@
 	"name"         : "node-starter",
 	"version"      : "0.0.0",
 	"description"  : "Default node project layout.",
-	"main"         : "server.js",
+	//"main"         : "server.js",
 	"author"       : "MrCuddles",
 	"dependencies" : {
 		"express" : "~3.4.4",
