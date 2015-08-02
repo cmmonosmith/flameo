@@ -1,7 +1,7 @@
 var Chart = require('./models/chart');
 var User = require('./models/user');
 var mongoose = require('mongoose');
-
+ 
 module.exports = function(app) {
 
 	app.get('/api/chart', isAuthenticated, function(req, res) {
